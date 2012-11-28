@@ -51,6 +51,8 @@
 #import "GTMOAuthAuthentication.h"
 #import "GTMHTTPFetcher.h"
 
+@protocol GTMOAuthCallbackDecider;
+
 enum {
   // error code indicating that the window was prematurely closed
   kGTMOAuthErrorWindowClosed = -1000
@@ -81,6 +83,7 @@ enum {
 }
 
 @property (nonatomic, retain) id delegate;
+@property (nonatomic, retain) id<GTMOAuthCallbackDecider> callbackDecider;
 @property (nonatomic, retain) GTMOAuthAuthentication *authentication;
 @property (nonatomic, retain) id userData;
 

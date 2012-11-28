@@ -15,6 +15,7 @@
 
 #define GTMOAUTHSIGNIN_DEFINE_GLOBALS 1
 #import "GTMOAuthSignIn.h"
+#import "GTMOAuthCallbackDecider.h"
 
 // we'll default to timing out if the network becomes unreachable for more
 // than 30 seconds when the sign-in page is displayed
@@ -252,26 +253,31 @@ static const NSTimeInterval kDefaultNetworkLossTimeoutInterval = 30.0;
   // the callback page was requested, so tell the window to close
   [self closeTheWindow];
 
-  // notify the app so it can put up a post-sign in, pre-access token fetch UI
-  NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-  [nc postNotificationName:kGTMOAuthUserHasSignedIn
-                    object:self
-                  userInfo:nil];
-
-  // once the authorization finishes, try to get a validated access token
   NSString *responseStr = [[redirectedRequest URL] query];
-  [auth_ setKeysForResponseString:responseStr];
 
-  NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:accessURL_];
-  [auth_ addAccessTokenHeaderToRequest:request];
+  if (!self.callbackDecider || [self.callbackDecider shouldContinueAuthAfterReceivingResponse:responseStr]) {
+    // notify the app so it can put up a post-sign in, pre-access token fetch UI
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc postNotificationName:kGTMOAuthUserHasSignedIn
+                      object:self
+                    userInfo:nil];
 
-  GTMHTTPFetcher *fetcher = [self fetcherWithRequest:request];
-  [fetcher setCommentWithFormat:@"access token for %@", [accessURL_ host]];
+    // once the authorization finishes, try to get a validated access token
+    [auth_ setKeysForResponseString:responseStr];
 
-  [fetcher beginFetchWithDelegate:self
-                didFinishSelector:@selector(accessFetcher:finishedWithData:error:)];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:accessURL_];
+    [auth_ addAccessTokenHeaderToRequest:request];
 
-  [self setPendingFetcher:fetcher fetchType:kGTMOAuthFetchTypeAccess];
+    GTMHTTPFetcher *fetcher = [self fetcherWithRequest:request];
+    [fetcher setCommentWithFormat:@"access token for %@", [accessURL_ host]];
+
+    [fetcher beginFetchWithDelegate:self
+                  didFinishSelector:@selector(accessFetcher:finishedWithData:error:)];
+
+    [self setPendingFetcher:fetcher fetchType:kGTMOAuthFetchTypeAccess];
+  } else {
+    [self invokeFinalCallbackWithError:[NSError errorWithDomain:kGTMOAuthErrorDomain code:kGTMOAuthErrorWindowClosed userInfo:@{@"response": responseStr}]];
+  }
 
   // tell the delegate that we did handle this request
   return YES;
