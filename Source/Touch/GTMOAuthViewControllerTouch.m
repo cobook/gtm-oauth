@@ -126,6 +126,7 @@ finishedWithAuth:(GTMOAuthAuthentication *)auth
                                                       delegate:self
                                             webRequestSelector:@selector(signIn:displayRequest:)
                                               finishedSelector:@selector(signIn:finishedWithAuth:error:)];
+      signIn_.callbackDecider = [delegate conformsToProtocol:@protocol(GTMOAuthCallbackDecider)] ? delegate : nil;
     } else {
       NSAssert(0, @"auth object required");
     }
