@@ -395,6 +395,7 @@ finishedWithAuth:(GTMOAuthAuthentication *)auth
     for (NSHTTPCookie *cookie in cookies) {
       [cookieStorage deleteCookie:cookie];
     }
+    [[NSUserDefaults standardUserDefaults] synchronize]; // Flush cookies to disk
   }
 }
 
@@ -549,6 +550,7 @@ finishedWithAuth:(GTMOAuthAuthentication *)auth
     if ([self isNavigationBarTranslucent]) {
       [self moveWebViewFromUnderNavigationBar];
     }
+    [self clearBrowserCookies];
     if (![signIn_ startSigningIn]) {
       // Can't start signing in. We must pop our view.
       // UIWebview needs time to stabilize. Animations need time to complete.
