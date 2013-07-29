@@ -49,7 +49,7 @@
 #endif
 
 #import "GTMOAuthAuthentication.h"
-#import "GTMHTTPFetcher.h"
+#import <GoogleOpenSource/GTMHTTPFetcher.h>
 
 @protocol GTMOAuthCallbackDecider;
 

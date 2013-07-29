@@ -34,7 +34,7 @@
   #import "GTLDefines.h"
 #endif
 
-#import "GTMHTTPFetcher.h"
+#import <GoogleOpenSource/GTMHTTPFetcher.h>
 
 #undef _EXTERN
 #undef _INITIALIZE_AS
