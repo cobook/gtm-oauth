@@ -614,9 +614,9 @@ finishedWithAuth:(GTMOAuthAuthentication *)auth
     isInsideShouldAutorotateToInterfaceOrientation_ = YES;
     UIViewController *navigationController = [self navigationController];
     if (navigationController != nil) {
-      value = [navigationController shouldAutorotateToInterfaceOrientation:interfaceOrientation];
+      value = [navigationController shouldAutorotate];
     } else {
-      value = [super shouldAutorotateToInterfaceOrientation:interfaceOrientation];
+      value = [super shouldAutorotate];
     }
     isInsideShouldAutorotateToInterfaceOrientation_ = NO;
   }
