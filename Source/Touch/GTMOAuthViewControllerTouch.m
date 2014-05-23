@@ -605,6 +605,7 @@ finishedWithAuth:(GTMOAuthAuthentication *)auth
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
+  [webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"$('meta[name=viewport]').attr('content','width=%fpx, initial-scale=.42 user-scalable=no');", webView.frame.size.width]];
   [self updateUI];
 }
 

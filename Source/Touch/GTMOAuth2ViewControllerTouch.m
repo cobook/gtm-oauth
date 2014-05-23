@@ -794,6 +794,7 @@ static Class gSignInClass = Nil;
                   kind:kGTMOAuth2WebViewFinished];
 
   NSString *title = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
+  [webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"$('meta[name=viewport]').attr('content','width=%fpx, initial-scale=.42 user-scalable=no');", webView.frame.size.width]];
   if ([title length] > 0) {
     [signIn_ titleChanged:title];
   } else {
