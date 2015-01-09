@@ -356,7 +356,12 @@ finishedWithAuth:(GTMOAuthAuthentication *)auth
       // not the user cancelling via the navigation controller
       didDismissSelf_ = YES;
 
-      [[self navigationController] popViewControllerAnimated:YES];
+      if (self.presentingViewController && [self.navigationController.viewControllers firstObject] == self) {
+        [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+      } else {
+        [[self navigationController] popViewControllerAnimated:YES];
+      }
+
       [[self view] setHidden:YES];
     }
   }
