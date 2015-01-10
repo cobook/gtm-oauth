@@ -357,7 +357,7 @@ finishedWithAuth:(GTMOAuthAuthentication *)auth
       didDismissSelf_ = YES;
 
       if (self.presentingViewController && [self.navigationController.viewControllers firstObject] == self) {
-        [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+        [self dismissViewControllerAnimated:YES completion:nil];
       } else {
         [[self navigationController] popViewControllerAnimated:YES];
       }
