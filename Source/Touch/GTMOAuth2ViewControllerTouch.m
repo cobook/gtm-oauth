@@ -415,7 +415,11 @@ finishedWithAuth:(GTMOAuth2Authentication *)auth
         self.popViewBlock = nil;
 #endif
       } else {
-        [self.navigationController popViewControllerAnimated:YES];
+        if (self.presentingViewController && [self.navigationController.viewControllers firstObject] == self) {
+          [self dismissViewControllerAnimated:YES completion:nil];
+        } else {
+          [[self navigationController] popViewControllerAnimated:YES];
+        }
       }
       self.view.hidden = YES;
     }
