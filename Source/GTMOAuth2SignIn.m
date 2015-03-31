@@ -254,7 +254,7 @@ finishedWithFetcher:(GTMHTTPFetcher *)fetcher
     NSAssert(hasClientID, @"GTMOAuth2SignIn: clientID needed");
     NSAssert(hasRedirect, @"GTMOAuth2SignIn: redirectURI needed");
 #endif
-    return NO;
+    return nil;
   }
 
   // invoke the UI controller's web request selector to display
