@@ -33,6 +33,8 @@
 static NSString * const kGTMOAuth2AccountName = @"OAuth";
 static GTMOAuth2Keychain* sDefaultKeychain = nil;
 
+NSString* const kGTMOAuth2KeychainErrorDomain = @"com.google.GTMOAuthKeychain";
+
 @interface GTMOAuth2ViewControllerTouch()
 
 @property (nonatomic, copy) NSURLRequest *request;

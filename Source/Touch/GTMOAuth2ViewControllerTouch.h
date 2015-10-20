@@ -43,7 +43,7 @@
 #define _INITIALIZE_AS(x)
 #endif
 
-_EXTERN NSString* const kGTMOAuth2KeychainErrorDomain       _INITIALIZE_AS(@"com.google.GTMOAuthKeychain");
+extern NSString* const kGTMOAuth2KeychainErrorDomain;
 
 @class GTMOAuth2SignIn;
 @class GTMOAuth2ViewControllerTouch;
