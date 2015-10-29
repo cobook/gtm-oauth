@@ -344,9 +344,6 @@ finishedWithAuth:(GTMOAuthAuthentication *)auth
   if ([html length] > 0) {
     [[self webView] loadHTMLString:html baseURL:nil];
   }
-
-  [rightBarButtonItem_ setCustomView:navButtonsView_];
-  [[self navigationItem] setRightBarButtonItem:rightBarButtonItem_];
 }
 
 - (void)popView {
